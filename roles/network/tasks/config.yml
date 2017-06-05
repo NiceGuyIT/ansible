@@ -1,0 +1,13 @@
+---
+- name: 'Configures IP, gateway, and DNS for machine'
+  nmcli:
+    conn_name: 'Ansible-eth1'
+    ifname: '{{ ifname }}'
+    type: 'ethernet'
+    ip4: '{{ ipv4_address }}'
+    gw4: '{{ gateway }}'
+    dns4: '{{ dns1 }} {{ dns2 }} {{ dns3 }}'
+    state: present
+  notify:
+    - 'restart network'
+

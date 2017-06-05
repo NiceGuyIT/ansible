@@ -1,0 +1,5 @@
+---
+- hosts: centos7:!disabled
+  roles:
+    - network
+

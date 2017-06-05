@@ -1,0 +1,6 @@
+---
+- name: Configure the Puppet agent to start, and run at boot
+  service:
+    name: puppet
+    enabled: true
+    state: started

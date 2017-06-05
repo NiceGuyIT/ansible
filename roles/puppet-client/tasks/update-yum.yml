@@ -1,0 +1,10 @@
+---
+- hosts: 'centos7:!dns:!disabled' 
+  become: true
+
+  tasks:
+  - name: 'YUM - fire and forget task'
+    command: 'yum -y update'
+    async: 3600
+  
+

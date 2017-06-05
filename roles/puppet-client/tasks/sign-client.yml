@@ -1,0 +1,3 @@
+---
+- name: Sign puppet-client
+  command: /opt/puppetlabs/bin/puppet cert sign {{ puppet_client }}

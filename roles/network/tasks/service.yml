@@ -1,0 +1,7 @@
+---
+- name: 'Start and Enable NetworkManager'
+  service:
+    name: 'NetworkManager'
+    state: 'started'
+    enabled: 'yes'
+

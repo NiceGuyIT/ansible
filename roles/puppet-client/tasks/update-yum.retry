@@ -1,0 +1,8 @@
+dc-ipa-01
+dc-ipa-02
+dhcp-isc-01
+file-nfs-01
+file-samba-01
+file-samba-02
+mail-postfix-01
+pxe-tftp-01
