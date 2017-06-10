@@ -1,0 +1,82 @@
+---
+- name: 'Disable SELinux on Nagios server'
+  selinux:
+    policy: 'targeted'
+    state: 'permissive'
+  tags: 'core'
+
+- name: 'Create directory to unpack Nagios'
+  file: 
+    path: '{{ nagios_dir }}'
+    owner: 'root'
+    group: 'root'
+    mode: '0755'
+    state: 'directory'
+  tags: 
+    - 'core'
+    - 'always'
+
+- name: 'Unpack Nagios installer'
+  unarchive:
+    src: 'nagios-{{ nagios_version }}.tar.gz'
+    dest: '{{ nagios_dir }}'
+    creates: '{{ nagios_dir }}/nagios-{{nagios_version}}/configure'
+  register: 'install'
+  tags: 'core'
+
+- name: 'Compile and install Nagios'
+  command: '{{ item }}'
+  args:
+    chdir: '{{ nagios_dir }}/nagios-{{ nagios_version }}'
+  when: 'install.changed'
+  with_items:
+    - 'bash configure'
+    - 'make all'
+    - 'make install'
+    - 'make install-init'
+    - 'make install-config'
+    - 'make install-webconf'
+  notify: 'start nagios'
+  tags: 'core'
+
+- name: 'Configure FirewallD (on RedHat/Centos 7) to allow nagios'
+  firewalld:
+    service: 'http'
+    permanent: true
+    state: 'enabled'
+    immediate: true
+  notify: 'start nagios'
+  when:
+    - ansible_os_family == "RedHat" 
+    - ansible_distribution_major_version == "7"
+  tags: 'core'
+
+- name: 'Configure IPtables (on RedHat/Centos 6) to allow nagios'
+  iptables:
+    chain: 'INPUT'
+    policy: 'ACCEPT'
+    destination_port: '80'
+    protocol: 'tcp'
+    comment: 'Allow http traffic for Nagios'
+    state: 'present'
+  when:
+    - ansible_os_family == "RedHat" 
+    - ansible_distribution_major_version == "6"
+  tags: 'core'
+
+
+- name: 'Create Nagios user'
+  shell: 'echo {{ nagios_password }} | htpasswd -i -c /usr/local/nagios/etc/htpasswd.users {{ nagios_user }}'
+  args:
+    creates: '/usr/local/nagios/etc/htpasswd.users'
+  tags: 'core'
+
+- name: 'Create the nagios account, and add the account to the apache group'
+  user:
+    name: 'nagios'
+    comment: 'Account used to manage the Nagios service'
+    groups: 'apache'
+    state: 'present'
+  tags: 'core'
+
+

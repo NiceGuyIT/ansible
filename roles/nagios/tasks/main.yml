@@ -1,0 +1,4 @@
+---
+- include: 'install.yml'
+- include: 'core.yml'
+- include: 'plugins.yml'
