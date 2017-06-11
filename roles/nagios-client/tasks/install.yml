@@ -1,0 +1,9 @@
+---
+- name: 'Install prerequisite Nagios client packages'
+  yum:
+    name: '{{ item }}'
+    state: 'installed'
+  with_items:
+    - 'epel-release'
+    - 'nrpe'
+  tags: 'install'

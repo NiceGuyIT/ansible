@@ -1,0 +1,36 @@
+---
+- name: 'Configure client to allow the Nagios host in nrpe.cfg'
+  lineinfile:
+    path: '/etc/nagios/nrpe.cfg'
+    line: 'allowed_hosts=127.0.0.1, {{ nagios_server }}'
+    regexp: '^allowed_hosts='
+    state: 'present'
+  notify: 'restart nrpe'
+  tags: 'config'
+
+- name: 'Configure FirewallD to allow NRPE (RedHat/Centos 7)' 
+  firewalld:
+    port: '5666/tcp'
+    permanent: true
+    state: 'enabled'
+    immediate: true
+  notify: 'restart nrpe'
+  when:
+    - ansible_os_family == "RedHat" 
+    - ansible_distribution_major_version == "7"
+  tags: 'config'
+
+- name: 'Configure iptables to allow NRPE (RedHat/CentOS 6)'
+  iptables:
+    chain: 'INPUT'
+    comment: 'Allow Nagios (NRPE) to query the host'
+    destination_port: '5666'
+    policy: 'ACCEPT'
+    protocol: 'tcp'
+    state: 'present'
+  notify: 'restart nrpe'
+  when:
+    - ansible_os_family == "RedHat" 
+    - ansible_distribution_major_version == "6"
+  tags: 'config'
+

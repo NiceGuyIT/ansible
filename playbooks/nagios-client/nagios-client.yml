@@ -1,0 +1,4 @@
+---
+- hosts: '{{ client_hosts }}'
+  roles:
+    - 'nagios-client'
