@@ -1,0 +1,32 @@
+---
+- name: 'Install Puppet repository'
+  yum:
+    name:  'https://yum.puppetlabs.com/puppetlabs-release-pc1-el-7.noarch.rpm'
+    state: 'present'
+
+- name: 'Install Puppet agent'
+  yum:
+    name: 'puppet-agent'
+    state: 'present'
+
+- name: 'Copy Puppet client configuration'
+  copy:
+    src: 'puppet.conf'
+    dest: '/etc/puppetlabs/puppet/puppet.conf'
+    owner: 'root'
+    group: 'root'
+    mode: 0644
+
+- name: 'Configure first Puppet run'
+  command: '/opt/puppetlabs/bin/puppet agent -t'
+  ignore_errors: 'yes'
+
+- name: 'Sign puppet-client'
+  command: '/opt/puppetlabs/bin/puppet cert sign {{ ansible_fqdn }}'
+  delegate_to: '{{ puppet_server }}'
+
+- name: 'Configure the Puppet agent to start, and run at boot'
+  service:
+    name: 'puppet'
+    enabled: true
+    state: 'started'

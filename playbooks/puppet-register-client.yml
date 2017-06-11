@@ -1,0 +1,5 @@
+---
+- hosts: '{{ puppet_hosts }}'
+  roles: 
+    - puppet-register-client
+
