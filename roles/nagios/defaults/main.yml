@@ -2,5 +2,35 @@
 nagios_dir: '/opt/Nagios'
 nagios_user: 'nagiosadmin'
 nagios_version: '4.3.2'
-nagios_plugins_version: '2.2.1'
+nagios_plugin_version: '2.2.1'
 nrpe_version: '3.1.0'
+
+permissions:
+  authorized_for_system_information: 
+    admins:
+      - 'nagiosadmin'
+      - '{{ nagios_user }}'
+  authorized_for_configuration_information:
+    admins:
+      - 'nagiosadmin'
+      - '{{ nagios_user }}'
+  authorized_for_system_commands:
+    admins:
+      - 'nagiosadmin'
+      - '{{ nagios_user }}'
+  authorized_for_all_services:
+    admins:
+      - 'nagiosadmin'
+      - '{{ nagios_user }}'
+  authorized_for_all_hosts:
+    admins:
+      - 'nagiosadmin'
+      - '{{ nagios_user }}'
+  authorized_for_all_service_commands:
+    admins:
+      - 'nagiosadmin'
+      - '{{ nagios_user }}'
+  authorized_for_all_host_commands:
+    admins:
+      - 'nagiosadmin'
+      - '{{ nagios_user }}'

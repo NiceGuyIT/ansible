@@ -54,6 +54,16 @@
     creates: '/usr/local/nagios/etc/htpasswd.users'
   tags: 'core'
 
+
+- name: 'Grant Nagios user administrative access'
+  lineinfile:
+    path: '/usr/local/nagios/etc/cgi.cfg'
+    line: '{{ item.key }}={{ item.value.admins[0] }},{{ item.value.admins[1] }}'
+    regexp: '.*{{ item.key }}='
+    state: 'present'
+  with_dict: '{{ permissions }}'
+  tags: 'core'
+
 - name: 'Create the nagios account, and add the account to the apache group'
   user:
     name: 'nagios'
@@ -61,3 +71,5 @@
     groups: 'apache'
     state: 'present'
   tags: 'core'
+
+
