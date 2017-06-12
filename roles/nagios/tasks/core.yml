@@ -36,34 +36,17 @@
     - 'make install-init'
     - 'make install-config'
     - 'make install-webconf'
-  notify: 'start nagios'
+  notify: 'restart Nagios'
   tags: 'core'
 
-- name: 'Configure FirewallD (on RedHat/Centos 7) to allow nagios'
-  firewalld:
-    service: 'http'
-    permanent: true
-    state: 'enabled'
-    immediate: true
-  notify: 'start nagios'
-  when:
-    - ansible_os_family == "RedHat" 
-    - ansible_distribution_major_version == "7"
+- name: "Ensure the 'rw' directory exists (This looks like a bug)"
+  file:
+    path: '/usr/local/nagios/var/rw'
+    owner: 'nagios'
+    group: 'nagios'
+    mode: '0755'
+    state: 'directory'
   tags: 'core'
-
-- name: 'Configure IPtables (on RedHat/Centos 6) to allow nagios'
-  iptables:
-    chain: 'INPUT'
-    policy: 'ACCEPT'
-    destination_port: '80'
-    protocol: 'tcp'
-    comment: 'Allow http traffic for Nagios'
-    state: 'present'
-  when:
-    - ansible_os_family == "RedHat" 
-    - ansible_distribution_major_version == "6"
-  tags: 'core'
-
 
 - name: 'Create Nagios user'
   shell: 'echo {{ nagios_password }} | htpasswd -i -c /usr/local/nagios/etc/htpasswd.users {{ nagios_user }}'
@@ -78,5 +61,3 @@
     groups: 'apache'
     state: 'present'
   tags: 'core'
-
-

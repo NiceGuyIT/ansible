@@ -1,0 +1,26 @@
+---
+- name: 'Configure FirewallD (on RedHat/Centos 7) to allow nagios'
+  firewalld:
+    service: 'http'
+    permanent: true
+    state: 'enabled'
+    immediate: true
+  notify: 'restart Nagios'
+  when:
+    - ansible_os_family == "RedHat" 
+    - ansible_distribution_major_version == "7"
+  tags: 'core'
+
+
+- name: 'Configure IPtables (on RedHat/Centos 6) to allow nagios'
+  iptables:
+    chain: 'INPUT'
+    policy: 'ACCEPT'
+    destination_port: '80'
+    protocol: 'tcp'
+    comment: 'Allow http traffic for Nagios'
+    state: 'present'
+  when:
+    - ansible_os_family == "RedHat" 
+    - ansible_distribution_major_version == "6"
+  tags: 'core'

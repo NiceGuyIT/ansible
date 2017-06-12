@@ -1,5 +1,6 @@
 ---
-- hosts: monitoring
+- hosts: '{{ nagios_host }}'
   roles:
     - nagios
-
+  vars_files:
+    - ../../vaulted_vars/log-nagios-01

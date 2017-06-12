@@ -1,0 +1,19 @@
+---
+- name: 'Unpack nrpe plugin'
+  unarchive:
+    src: 'nrpe-{{ nrpe_version }}.tar.gz'
+    dest: '{{ nagios_dir }}'
+    creates: '{{ nagios_dir }}/nrpe-{{nrpe_version}}'
+  register: 'install'
+  tags: 'nrpe'
+
+- name: 'Install nrpe plugin'
+  command: '{{ item }}'
+  args:
+    chdir: '{{ nagios_dir }}/nrpe-{{ nrpe_version }}'
+  when: 'install.changed'
+  with_items:
+    - 'bash configure'
+    - 'make check_nrpe'
+    - 'make install-plugin'
+  tags: 'nrpe'

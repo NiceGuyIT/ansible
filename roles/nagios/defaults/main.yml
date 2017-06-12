@@ -1,3 +1,6 @@
 ---
-nagios_version: '4.3.2'
 nagios_dir: '/opt/Nagios'
+nagios_user: 'nagiosadmin'
+nagios_version: '4.3.2'
+nagios_plugins_version: '2.2.1'
+nrpe_version: '3.1.0'

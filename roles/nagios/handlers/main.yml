@@ -1,13 +1,14 @@
 ---
-- name: 'start httpd'
+- name: 'restart httpd'
   service:
     name:  'httpd'
-    state: 'started'
+    state: 'restarted'
     enabled: 'yes'
-    listen: 'start nagios'
+  listen: 'restart Nagios'
 
-- name: 'start nagios'
+- name: 'restart nagios'
   service:
     name: 'nagios'
     enabled: 'yes'
-    state: 'started'
+    state: 'restarted'
+  listen: 'restart Nagios'
