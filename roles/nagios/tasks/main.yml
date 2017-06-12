@@ -1,6 +1,6 @@
 ---
 - include: 'install.yml'
 - include: 'firewall.yml'
-- include: 'core.yml'
+- include: 'nagios.yml'
 - include: 'plugins.yml'
 - include: 'nrpe.yml'

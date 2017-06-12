@@ -3,7 +3,7 @@
   selinux:
     policy: 'targeted'
     state: 'permissive'
-  tags: 'core'
+  tags: 'nagios'
 
 - name: 'Create directory to unpack Nagios'
   file: 
@@ -13,7 +13,7 @@
     mode: '0755'
     state: 'directory'
   tags: 
-    - 'core'
+    - 'nagios'
     - 'always'
 
 - name: 'Unpack Nagios installer'
@@ -22,7 +22,7 @@
     dest: '{{ nagios_dir }}'
     creates: '{{ nagios_dir }}/nagios-{{nagios_version}}/configure'
   register: 'install'
-  tags: 'core'
+  tags: 'nagios'
 
 - name: 'Compile and install Nagios'
   command: '{{ item }}'
@@ -37,7 +37,7 @@
     - 'make install-config'
     - 'make install-webconf'
   notify: 'restart Nagios'
-  tags: 'core'
+  tags: 'nagios'
 
 - name: "Ensure the 'rw' directory exists (This looks like a bug)"
   file:
@@ -46,13 +46,13 @@
     group: 'nagios'
     mode: '0755'
     state: 'directory'
-  tags: 'core'
+  tags: 'nagios'
 
 - name: 'Create Nagios user'
   shell: 'echo {{ nagios_password }} | htpasswd -i -c /usr/local/nagios/etc/htpasswd.users {{ nagios_user }}'
   args:
     creates: '/usr/local/nagios/etc/htpasswd.users'
-  tags: 'core'
+  tags: 'nagios'
 
 
 - name: 'Grant Nagios user administrative access'
@@ -62,7 +62,7 @@
     regexp: '.*{{ item.key }}='
     state: 'present'
   with_dict: '{{ permissions }}'
-  tags: 'core'
+  tags: 'nagios'
 
 - name: 'Create the nagios account, and add the account to the apache group'
   user:
@@ -70,6 +70,13 @@
     comment: 'Account used to manage the Nagios service'
     groups: 'apache'
     state: 'present'
-  tags: 'core'
+  tags: 'nagios'
 
 
+- name: 'Configure a configuration directory (NOT IDEMPOTENT)'
+  lineinfile:
+    path: '/usr/local/nagios/etc/nagios.cfg'
+    line: 'cfg_dir=/usr/local/nagios/etc/servers'
+    regexp: '^#cfg_dir=/usr/local/nagios/etc/servers'
+    state: 'present'
+  tags: 'nagios'
