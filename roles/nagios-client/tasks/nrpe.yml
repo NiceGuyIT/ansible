@@ -38,3 +38,13 @@
     regexp: '.*disable.*='
     state: 'present'
   tags: 'nrpe'
+
+- name: 'Configure client to allow the Nagios host in nrpe.cfg'
+  lineinfile:
+    path: '/usr/local/nagios/etc/nrpe.cfg'
+    line: 'allowed_hosts=127.0.0.1,{{ nagios_server }}'
+    regexp: '^allowed_hosts='
+    state: 'present'
+  notify: 'restart Nagios'
+  tags: 'nrpe'
+
