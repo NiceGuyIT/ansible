@@ -1,0 +1,12 @@
+---
+- name: 'Create directory to unpack Nagios plugins'
+  file: 
+    path: '{{ nagios_dir }}'
+    owner: 'root'
+    group: 'root'
+    mode: '0755'
+    state: 'directory'
+  tags: 
+    - 'core'
+    - 'always'
+

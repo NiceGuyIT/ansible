@@ -1,0 +1,20 @@
+---
+- name: 'Unpack Nagios plugins'
+  unarchive:
+    src: 'nagios-plugins-{{ nagios_plugin_version }}.tar.gz'
+    dest: '{{ nagios_dir }}'
+    creates: '{{ nagios_dir }}/nagios-plugins-{{nagios_plugin_version}}'
+  register: 'install'
+  tags: 'plugins'
+
+- name: 'Install Nagios plugins'
+  command: '{{ item }}'
+  args:
+    chdir: '{{ nagios_dir }}/nagios-plugins-{{ nagios_plugin_version }}'
+  when: 'install.changed'
+  with_items:
+    - 'bash configure'
+    - 'make'
+    - 'make install'
+  notify: 'restart Nagios'
+  tags: 'plugins'

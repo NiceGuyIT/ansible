@@ -1,0 +1,40 @@
+---
+- name: 'Unpack nrpe plugin'
+  unarchive:
+    src: 'nrpe-{{ nrpe_version }}.tar.gz'
+    dest: '{{ nagios_dir }}'
+    creates: '{{ nagios_dir }}/nrpe-{{nrpe_version}}'
+  register: 'install'
+  tags: 'nrpe'
+
+- name: 'Install nrpe plugin'
+  command: '{{ item }}'
+  args:
+    chdir: '{{ nagios_dir }}/nrpe-{{ nrpe_version }}'
+  when: 'install.changed'
+  with_items:
+    - 'bash configure'
+    - 'make all'
+    - 'make install-groups-users'
+    - 'make install'
+    - 'make install-config'
+    - 'make install-inetd'
+    - 'make install-init'
+  notify: 'restart Nagios'
+  tags: 'nrpe'
+
+- name: 'Ensure nrpe service exists in /etc/services'
+  lineinfile:
+    path: '/etc/services'
+    line: 'nrpe 5666/tcp'
+    regexp: '^nrpe'
+    state: 'present'
+  tags: 'nrpe'
+
+- name: 'Enable nrpe in xinetd'
+  lineinfile:
+    path: '/etc/xinetd.d/nrpe'
+    line: '    disable         = no'
+    regexp: '.*disable.*='
+    state: 'present'
+  tags: 'nrpe'

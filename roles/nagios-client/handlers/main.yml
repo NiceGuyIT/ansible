@@ -4,3 +4,11 @@
     name: 'nrpe'
     state: 'restarted'
     enabled: 'yes'
+  listen: 'restart Nagios'
+
+- name: 'restart xinetd'
+  service:
+    name: 'xinetd'
+    state: 'restarted'
+    enabled: 'yes'
+  listen: 'restart nagios'
