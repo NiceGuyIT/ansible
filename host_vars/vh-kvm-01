@@ -1,0 +1,5 @@
+---
+ansible_port: 443
+ifname: '*'
+ipv4_address: '192.168.1.102/24'
+gateway: '192.168.1.254'
