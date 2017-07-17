@@ -1,0 +1,28 @@
+---
+# It appears the Docker repository does not have a GPG key 20170716
+- name: 'Install the Docker community version repository'
+  copy:
+    src: 'docker-ce.repo'
+    dest: '/etc/yum.repos.d/docker-ce.repo'
+    mode: '0644'
+    owner: 'root'
+    group: 'root'
+
+- name: 'Install latest version of Docker'
+  yum:
+    name: 'docker-ce'
+    state: 'latest'
+
+- name: 'Download and install Docker-Compose v1.15.0 from Github'
+  get_url:
+    url: 'https://github.com/docker/compose/releases/download/1.15.0-rc1/docker-compose-Linux-x86_64'
+    dest: '/usr/local/bin/docker-compose'
+    mode: '0755'
+    checksum: 'sha256:77438f027ef3f537d951a0088fe9f1ccc7c4e8920a409e7052a0a80859f15766'
+
+- name: 'Download and install Docker-Machine v0.12.2 from Github'
+  get_url:
+    url:  'https://github.com/docker/machine/releases/download/v0.12.2/docker-machine-Linux-x86_64'
+    dest: '/usr/local/bin/docker-machine'
+    mode: '0755'
+    checksum: 'sha256:3c0a1a03653dff205f27bb178773f3c294319435a2589cf3cb4456423f8cef08'
