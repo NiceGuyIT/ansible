@@ -20,8 +20,15 @@
     append: 'yes'
     state: 'present'
 
+- name: 'Get info on the default storage pool'
+  command: 'virsh pool-info default'
+  register: pool_info
+  changed_when: False
+
 - name: 'Autostart the default storage pool'
   command: 'virsh pool-autostart default'
+  when: pool_info.stdout | search("Autostart.*no") == true
 
 - name: 'Start the default storage pool'
   command: 'virsh pool-start default'
+  when: pool_info.stdout is search("State.*inactive") == true

@@ -1,8 +1,10 @@
 ---
 - name: 'Check if the host supports CPU Hardware Virtualization'
-  shell: "/usr/bin/grep -E '(vmx|svm)' /proc/cpuinfo"
+  command: "/usr/bin/grep -E '(vmx|svm)' /proc/cpuinfo"
   register: 'virtualization_supported'
+  changed_when: False
 
-- fail:
+- name: 'Stop the playbook if the host doesnt support Hardware Virtualization'
+  fail:
     msg: 'The system does not support CPU Hardware Virtualization'
   when: virtualization_supported.rc == 1
