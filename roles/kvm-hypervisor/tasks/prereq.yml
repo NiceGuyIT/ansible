@@ -1,0 +1,8 @@
+---
+- name: 'Check if the host supports CPU Hardware Virtualization'
+  shell: "/usr/bin/grep -E '(vmx|svm)' /proc/cpuinfo"
+  register: 'virtualization_supported'
+
+- fail:
+    msg: 'The system does not support CPU Hardware Virtualization'
+  when: virtualization_supported.rc == 1

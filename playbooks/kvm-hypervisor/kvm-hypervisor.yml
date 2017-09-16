@@ -1,0 +1,4 @@
+---
+- hosts: '{{ kvm_host }}'
+  roles:
+    - kvm-hypervisor

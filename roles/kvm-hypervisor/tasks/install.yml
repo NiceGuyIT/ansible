@@ -1,0 +1,16 @@
+---
+- name: 'Install required packages for KVM virtualization'
+  yum:
+    name: '{{ item }}'
+    state: 'present'
+  with_items:
+    - 'qemu-kvm'
+    - 'qemu-img'
+    - 'virt-manager'
+    - 'libvirt'
+    - 'libvirt-python'
+    - 'libvirt-client'
+    - 'virt-install'
+    - 'virt-viewer'
+    - 'bridge-utils'
+  notify: 'Start libvirtd'

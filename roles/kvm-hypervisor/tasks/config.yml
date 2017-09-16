@@ -1,0 +1,27 @@
+---
+- name: 'Configure the libvirtd service'
+  copy:
+    src: 'libvirtd.conf'
+    dest: '/etc/libvirt/'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+  notify: 'Restart libvirtd'
+
+- name: 'Add the libvirt group'
+  group:
+    name: 'libvirt'
+    state: 'present'
+
+- name: 'Add the admin account {{ admin }} to the libvirt group'
+  user:
+    name: '{{ admin }}'
+    groups: 'libvirt'
+    append: 'yes'
+    state: 'present'
+
+- name: 'Autostart the default storage pool'
+  command: 'virsh pool-autostart default'
+
+- name: 'Start the default storage pool'
+  command: 'virsh pool-start default'

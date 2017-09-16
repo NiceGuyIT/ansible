@@ -1,0 +1,12 @@
+---
+- name: 'Start libvirtd'
+  service:
+    name: 'libvirtd'
+    state: 'started'
+    enabled: 'yes'
+
+- name: 'Restart libvirtd'
+  service:
+    name: 'libvirtd'
+    state: 'restarted'
+    enabled: 'yes'
