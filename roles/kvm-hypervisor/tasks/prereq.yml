@@ -8,4 +8,3 @@
   fail:
     msg: 'The system does not support CPU Hardware Virtualization'
   when: virtualization_supported.rc == 1
-  df
