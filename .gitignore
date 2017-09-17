@@ -1,2 +1,3 @@
-*.tar.gz
-*.retry
+**/*.tar.gz
+**/*.retry
+**/*.iso
