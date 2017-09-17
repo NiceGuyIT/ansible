@@ -1,0 +1,12 @@
+---
+- name: 'Add the libvirt group'
+  group:
+    name: 'libvirt'
+    state: 'present'
+
+- name: 'Add the admin account {{ admin }} to the libvirt group'
+  user:
+    name: '{{ admin }}'
+    groups: 'libvirt'
+    append: 'yes'
+    state: 'present'

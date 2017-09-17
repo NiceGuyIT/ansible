@@ -1,0 +1,25 @@
+---
+# This file makes assumptions that kvm will create the default pools
+- name: 'Get info on the default storage pool'
+  command: 'virsh pool-info default'
+  register: default_info
+  changed_when: False
+
+- name: 'Get info on the default boot-scratch pool'
+  command: 'virsh pool-info boot-scratch'
+  register: boot_scratch_info
+  changed_when: False
+
+- name: 'Autostart the default storage pools'
+  command: 'virsh pool-autostart {{ item.name }}'
+  when: item.info.stdout | search("Autostart.*no") == true
+  with_items:
+    - { info: "{{ default_info }}", name: 'default' }
+    - { info: "{{ boot_scratch_info }}", name: 'boot-scratch' }
+
+- name: 'Start the default storage pools'
+  command: 'virsh pool-start {{ item.name }}'
+  when: item.info.stdout is search("State.*inactive") == true
+  with_items:
+    - { info: "{{ default_info }}", name: 'default' }
+    - { info: "{{ boot_scratch_info }}", name: 'boot-scratch' }

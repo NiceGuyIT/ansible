@@ -2,3 +2,5 @@
 - include: 'prereq.yml'
 - include: 'install.yml'
 - include: 'config.yml'
+- include: 'config-user.yml'
+- include: 'config-storage.yml'
