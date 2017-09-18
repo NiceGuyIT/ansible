@@ -4,3 +4,5 @@
 - include: 'config.yml'
 - include: 'config-user.yml'
 - include: 'config-storage.yml'
+- include: 'config-nat.yml'
+  when: network_type == 'nat'

@@ -1,0 +1,8 @@
+---
+- name: 'Configure IP forwarding on the virtual host'
+  sysctl:
+    name: 'net.ipv4.ip_forward'
+    value: 1
+    sysctl_set: 'yes'
+    state: 'present'
+    reload: 'yes'
