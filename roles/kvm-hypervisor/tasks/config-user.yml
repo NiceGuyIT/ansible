@@ -1,4 +1,6 @@
 ---
+# This configuration is required to allow an approved user
+# to access the libvirt API on the virualization host over SSH
 - name: 'Add the libvirt group'
   group:
     name: 'libvirt'
