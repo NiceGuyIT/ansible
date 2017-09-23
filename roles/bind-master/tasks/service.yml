@@ -1,0 +1,12 @@
+---
+- name: 'Disable named'
+  service:
+    name: 'named'
+    state: 'stopped'
+    enabled: 'no'
+
+- name: 'Start named-chroot'
+  service:
+    name: 'named-chroot'
+    state: 'started'
+    enabled: 'yes'

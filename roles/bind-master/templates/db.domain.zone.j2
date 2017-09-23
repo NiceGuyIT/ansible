@@ -1,0 +1,13 @@
+$ORIGIN .
+$TTL 38400    ; 10 hours 40 minutes
+{{ domain }}        IN SOA    {{ ansible_fqdn }}. root.{{ ansible_fqdn }}. (
+                2017092300 ; serial
+                10800      ; refresh (3 hours)
+                3600       ; retry (1 hour)
+                604800     ; expire (1 week)
+                38400      ; minimum (10 hours 40 minutes)
+                )
+            NS    {{ ansible_fqdn }}.
+            A    {{ dns1 }}
+$ORIGIN {{ domain }}.
+{{ ansible_hostname }}	A	{{ dns1 }}

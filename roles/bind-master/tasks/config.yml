@@ -1,0 +1,46 @@
+---
+- name: 'Install the rndc key'
+  copy:
+    src: 'rndc.key'
+    dest: '/etc/'
+    owner: 'root'
+    group: 'named'
+    mode: '0640'
+
+- name: 'Configure Bind'
+  template:
+    src: 'named.conf.j2'
+    dest: '/etc/named.conf'
+    owner: 'root'
+    group: 'named'
+    mode: '0640'
+    validate: 'named-checkconf %s'
+  notify: 'Reload named-chroot'
+
+- name: 'Configure the Bind forward zone'
+  template:
+    src: 'db.domain.zone.j2'
+    dest: '/var/named/dynamic/db.{{ domain }}.zone'
+    owner: 'root'
+    group: 'named'
+    mode: '0640'
+    validate: 'named-checkzone {{ domain }} %s'
+  notify: 'Reload named-chroot'
+
+- name: 'Configure the Bind reverse zone'
+  template:
+    src: 'db.domain.rr.zone.j2'
+    dest: '/var/named/dynamic/db.{{ domain }}.rr.zone'
+    owner: 'root'
+    group: 'named'
+    mode: '0640'
+    validate: 'named-checkzone {{ reverse_dns }} %s'
+  notify: 'Reload named-chroot'
+
+- name: 'Configure /etc/resolv.conf to point locally'
+  copy:
+    src: 'resolv.conf'
+    dest: '/etc/'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'

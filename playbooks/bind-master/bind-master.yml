@@ -1,0 +1,4 @@
+---
+- hosts: dns-bind-01
+  roles:
+    - bind-master
