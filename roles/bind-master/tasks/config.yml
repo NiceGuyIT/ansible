@@ -38,9 +38,9 @@
   notify: 'Reload named-chroot'
 
 - name: 'Configure /etc/resolv.conf to point locally'
-  copy:
-    src: 'resolv.conf'
-    dest: '/etc/'
+  template:
+    src: 'resolv.conf.j2'
+    dest: '/etc/resolv.conf'
     owner: 'root'
     group: 'root'
     mode: '0644'
