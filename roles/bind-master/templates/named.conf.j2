@@ -23,6 +23,24 @@ logging {
                 file "data/named.run";
                 severity dynamic;
         };
+
+        channel update_debug {
+             file "/var/log/update-debug.log";
+             severity  debug 3;
+             print-category yes;
+             print-severity yes;
+             print-time     yes;
+        };
+        channel security_info    {
+             file "/var/log/named-auth.info";
+             severity  info;
+             print-category yes;
+             print-severity yes;
+             print-time     yes;
+        };
+
+        category update { update_debug; };
+        category security { security_info; };
 };
 
 zone "{{ domain }}" IN {

@@ -7,6 +7,14 @@
     group: 'named'
     mode: '0640'
 
+- name: 'Ensure Dynamic DNS log files are created'
+  command: 'touch {{ item }}'
+  args:
+    creates: '{{ item }}'
+  with_items:
+    - '/var/log/update-debug.log'
+    - '/var/log/named-auth.info'
+
 - name: 'Configure Bind'
   template:
     src: 'named.conf.j2'

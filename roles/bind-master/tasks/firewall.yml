@@ -7,7 +7,7 @@
   with_items:
     - '53/udp'
     - '953/tcp'
-  when: 
+  when:
     - ansible_os_family == 'RedHat'
     - ansible_distribution_major_version == '7'
 
