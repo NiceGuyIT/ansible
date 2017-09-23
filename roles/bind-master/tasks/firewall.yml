@@ -2,7 +2,8 @@
 - name: 'Configure firewalld for DNS'
   firewalld:
     port: '{{ item }}'
-    permanent: 'true'
+    permanent: 'True'
+    immediate: 'True'
     state: 'enabled'
   with_items:
     - '53/udp'
