@@ -1,0 +1,26 @@
+---
+- name: 'Configure firewalld for DNS'
+  firewalld:
+    port: '{{ item }}'
+    permanent: 'True'
+    immediate: 'True'
+    state: 'enabled'
+  with_items:
+    - '67/udp'
+  when:
+    - ansible_os_family == 'RedHat'
+    - ansible_distribution_major_version == '7'
+
+- name: 'Configure iptables for DNS'
+  iptables:
+    action: 'append'
+    chain: 'INPUT'
+    policy: 'ACCEPT'
+    protocol: '{{ item.protocol }}'
+    destination_port: '{{ item.dp }}'
+    state: 'present'
+  with_items:
+    - { dp: '67', protocol: 'udp' }
+  when:
+    - ansible_os_family == 'RedHat'
+    - ansible_distribution_major_version == '6'

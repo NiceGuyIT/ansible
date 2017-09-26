@@ -1,0 +1,18 @@
+---
+- name: 'Install the /etc/rndc.key to allow for secure dynamic DNS updates'
+  copy:
+    src: 'rndc.key'
+    dest: '/etc/'
+    owner: 'root'
+    group: 'root'
+    mode: '0640'
+
+- name: 'Configure the DHCP server'
+  template:
+    src: 'dhcpd.conf.j2'
+    dest: '/etc/dhcp/dhcpd.conf'
+    owner: 'root'
+    group: 'dhcpd'
+    mode: '0644'
+    validate: 'dhcpd -t -cf %s'
+  notify: 'Restart dhcpd'

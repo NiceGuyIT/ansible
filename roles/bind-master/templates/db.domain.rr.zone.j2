@@ -1,7 +1,7 @@
 $ORIGIN .
 $TTL 86400    ; 1 day
 {{ reverse_dns }}    IN SOA    {{ domain }}. root.{{ ansible_fqdn }}. (
-                2017092300 ; serial
+                2017092600 ; serial
                 28800      ; refresh (8 hours)
                 7200       ; retry (2 hours)
                 2419200    ; expire (4 weeks)
@@ -9,5 +9,6 @@ $TTL 86400    ; 1 day
                 )
             NS    {{ ansible_fqdn }}.
 $ORIGIN {{ reverse_dns }}.
-{{ dns1_reverse }}	PTR	{{ ansible_fqdn }}.
-
+{% for host, value in static_declarations.iteritems() %}
+{{ value.reverse_ip }}	PTR	{{ value.hostname }}.{{ domain }}.
+{% endfor %}

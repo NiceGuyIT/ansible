@@ -3,6 +3,12 @@
 # the role will not work properly
 domain: 'change.me.com'
 reverse_dns: '1.168.192.in-addr.arpa'
+gateway: '192.168.1.1'
+netmask: '255.255.255.0'
+subnets: '192.168.122.0'
+broadcast: '192.168.122.255'
+start_range: '192.168.122.50'
+end_range: '192.168.122.150'
 static_declarations:
   dhcp:
     hostname: 'dhcp'

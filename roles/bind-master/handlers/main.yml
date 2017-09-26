@@ -3,3 +3,8 @@
   service:
     name: 'named-chroot'
     state: 'reloaded'
+
+- name: 'Restart named-chroot'
+  service:
+    name: 'named-chroot'
+    state: 'restarted'

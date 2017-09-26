@@ -1,0 +1,6 @@
+---
+- name: 'Enable the DHCPD service'
+  service:
+    name: 'dhcpd'
+    state: 'started'
+    enabled: 'yes'

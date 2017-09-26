@@ -7,14 +7,6 @@
     group: 'named'
     mode: '0640'
 
-- name: 'Ensure Dynamic DNS log files are created'
-  command: 'touch {{ item }}'
-  args:
-    creates: '{{ item }}'
-  with_items:
-    - '/var/log/update-debug.log'
-    - '/var/log/named-auth.info'
-
 - name: 'Configure Bind'
   template:
     src: 'named.conf.j2'
@@ -25,6 +17,11 @@
     validate: 'named-checkconf %s'
   notify: 'Reload named-chroot'
 
+- name: 'Check if the forward zone file has already been created. The file is dynamic so it cant be modified manually now'
+  stat:
+    path: '/var/named/dynamic/db.{{ domain }}.zone'
+  register: forward_zone
+
 - name: 'Configure the Bind forward zone'
   template:
     src: 'db.domain.zone.j2'
@@ -33,7 +30,13 @@
     group: 'named'
     mode: '0640'
     validate: 'named-checkzone {{ domain }} %s'
-  notify: 'Reload named-chroot'
+  notify: 'Restart named-chroot'
+  when: not forward_zone.stat.exists
+
+- name: 'Check if the reverse zone file has already been created. The file is dynamic so it cant be modified manually now'
+  stat:
+    path: '/var/named/dynamic/db.{{ domain }}.rr.zone'
+  register: reverse_zone
 
 - name: 'Configure the Bind reverse zone'
   template:
@@ -43,7 +46,8 @@
     group: 'named'
     mode: '0640'
     validate: 'named-checkzone {{ reverse_dns }} %s'
-  notify: 'Reload named-chroot'
+  notify: 'Restart named-chroot'
+  when: not reverse_zone.stat.exists
 
 - name: 'Configure /etc/resolv.conf to point locally'
   template:

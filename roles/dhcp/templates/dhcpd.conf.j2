@@ -1,0 +1,53 @@
+include "/etc/rndc.key";
+
+ddns-updates on;
+ddns-domainname "{{ domain }}.";
+ddns-update-style interim;
+update-static-leases on;
+use-host-decl-names on;
+allow client-updates;
+lease-file-name "/var/lib/dhcpd/dhcpd.leases";
+authoritative;
+option domain-name    "{{ domain }}.";
+default-lease-time    86400;  # 24 Hours
+max-lease-time        172800; # 48 Hours
+
+zone {{ domain }}. {
+    primary {{ static_declarations.dns.ip }};
+    key rndc-key;
+}
+
+zone {{ reverse_dns }}. {
+    primary {{ static_declarations.dns.ip }};
+    key rndc-key;
+}
+
+subnet {{ subnet }} netmask {{ netmask }} {
+    allow client-updates;
+    allow unknown-clients;
+    ddns-updates on;
+    option routers            {{ gateway }};
+    option subnet-mask        {{ netmask }};
+    option broadcast-address     {{ broadcast }};
+    option domain-name-servers    {{ static_declarations.dns.ip }};
+    option domain-name        "{{ domain }}.";
+    range {{ start_range }}    {{ end_range }};
+        #zones
+        zone {{ domain }}. {
+              primary {{ static_declarations.dns.ip }};
+              key rndc-key;
+        }
+        zone {{ reverse_dns }}. {
+              primary {{ static_declarations.dns.ip }};
+              key rndc-key;
+       }
+
+{% for host, value in static_declarations.iteritems() %}
+	host {{ value.hostname }} {
+		hardware ethernet {{ value.mac_addr }};
+		fixed-address {{ value.ip }};
+		option host-name "{{ value.hostname }}. {{ domain }}";
+		ddns-hostname "{{ value.hostname }}";
+	}
+{% endfor %}
+}
