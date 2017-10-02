@@ -1,0 +1,42 @@
+---
+- name: 'Configure firewalld for cobbler'
+  firewalld:
+    port: '{{ item }}'
+    permanent: 'True'
+    immediate: 'True'
+    state: 'enabled'
+  with_items:
+    - '69/udp'
+    - '69/tcp'
+    - '80/tcp'
+    - '443/tcp'
+    - '4011/udp'
+    - '25150/tcp'
+    - '25150/udp'
+    - '25151/udp'
+    - '25151/tcp'
+  when:
+    - ansible_os_family == 'RedHat'
+    - ansible_distribution_major_version == '7'
+
+- name: 'Configure iptables for cobbler'
+  iptables:
+    action: 'append'
+    chain: 'INPUT'
+    policy: 'ACCEPT'
+    protocol: '{{ item.protocol }}'
+    destination_port: '{{ item.dp }}'
+    state: 'present'
+  with_items:
+    - { dp: '69', protocol: 'udp' }
+    - { dp: '69', protocol: 'tcp' }
+    - { dp: '80', protocol: 'tcp' }
+    - { dp: '443', protocol: 'tcp' }
+    - { dp: '4011', protocol: 'udp' }
+    - { dp: '25150', protocol: 'tcp' }
+    - { dp: '25150', protocol: 'tcp' }
+    - { dp: '25151', protocol: 'udp' }
+    - { dp: '25151', protocol: 'udp' }
+  when:
+    - ansible_os_family == 'RedHat'
+    - ansible_distribution_major_version == '6'

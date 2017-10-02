@@ -1,0 +1,27 @@
+---
+# All these default values need to be set properly in your environment or
+# the role will not work properly
+domain: 'change.me.com'
+reverse_dns: '1.168.192.in-addr.arpa'
+gateway: '192.168.1.1'
+netmask: '255.255.255.0'
+subnets: '192.168.122.0'
+broadcast: '192.168.122.255'
+start_range: '192.168.122.50'
+end_range: '192.168.122.150'
+static_declarations:
+  dhcp:
+    hostname: 'dhcp'
+    ip: '192.168.1.4'
+    reverse_ip: '4'
+    mac_addr: 'aa:aa:aa:aa:aa:aa'
+  dns:
+    hostname: 'dns'
+    ip: '192.168.122.5'
+    reverse_ip: '5'
+    mac_addr: '52:54:00:f1:63:44'
+  pxe:
+    hostname: 'pxe'
+    ip: '192.168.1.10'
+    reverse_ip: '10'
+    mac_addr: 'aa:aa:aa:aa:aa:aa'

@@ -1,0 +1,17 @@
+---
+- name: 'Check if bootloader files exist'
+  stat:
+    path: '/var/lib/cobbler/loaders/{{ item }}'
+  with_items:
+    - 'pxelinux.0'
+    - 'menu.c32'
+    - 'elilo-ia64.efi'
+    - 'yaboot'
+  register: bootloaders
+
+- name: 'Install Cobbler bootloaders'
+  command: '/bin/cobbler get-loaders'
+  with_items: '{{ bootloaders.results }}'
+  when: not item.stat.exists
+  run_once: True
+

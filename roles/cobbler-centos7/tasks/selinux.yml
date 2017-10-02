@@ -1,0 +1,17 @@
+---
+- name: 'Ensure SElinux is set to enforcing'
+  selinux:
+    policy: 'targeted'
+    state: 'enforcing'
+
+- name: 'Enable httpd to connect to Cobbler'
+  seboolean:
+    name: httpd_can_network_connect_cobbler
+    state: 'yes'
+    persistent: 'yes'
+
+- name: 'Enable httpd'
+  seboolean:
+    name: 'httpd_can_network_connect'
+    state: 'yes'
+    persistent: 'yes'

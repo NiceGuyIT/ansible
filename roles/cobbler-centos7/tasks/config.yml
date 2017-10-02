@@ -1,0 +1,21 @@
+---
+- name: 'Configure Cobbler settings'
+  template:
+    src: 'settings'
+    dest: '/etc/cobbler/'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+  notify: 'Restart cobblerd'
+  # I really want this sync to happen on any install or config change
+  # But ansible wont' let me. This is a temporary work around and not very clean
+  notify: 'Sync Cobbler'
+
+- name: 'Configure tftp'
+  template:
+    src: 'tftp'
+    dest: '/etc/xinetd.d/'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+  notify: 'Restart cobblerd'

@@ -1,0 +1,43 @@
+- name: 'Check if the Centos7 distro has been added'
+  shell: '/bin/cobbler distro list | grep Centos7-x86_64'
+  register: centos_distro
+  changed_when: False
+  ignore_errors: True  
+
+- name: 'Install the Centos ISO if cobbler does not have it'
+  block:
+    - name: 'Create the isos directory'
+      file:
+        path: '/var/isos'
+        owner: 'root'
+        group: 'root'
+        mode: '0755'
+        state: 'directory'
+
+    - name: 'Download the Centos7 iso'
+      get_url:
+        url: 'https://buildlogs.centos.org/rolling/7/isos/x86_64/CentOS-7-x86_64-DVD-1707-01.iso'
+        dest: '/var/isos/CentOS-7-x86_64-DVD-1707-01.iso'
+        checksum: 'sha256:efa139d9b36945cc9ac1c03bf40a2295437cacbb26f79097c2f081f5708a9079'
+        tmp_dest: '/var/isos'
+
+    - name: 'Mount the iso'
+      mount:
+        path: '/mnt/iso_mount'
+        src: '/var/isos/CentOS-7-x86_64-DVD-1707-01.iso'
+        fstype: 'iso9660'
+        opts: 'ro'
+        state: 'mounted'
+
+    - name: 'Add the Centos7 iso to cobbler'
+      command: >
+        /bin/cobbler import 
+        --path=/mnt/iso_mount 
+        --name=Centos7 
+        --kickstart=/var/lib/cobbler/kickstarts/virtual-dhcp-ks.cfg
+
+    - name: 'Unmount the iso'
+      mount:
+        path: '/mnt/isomount'
+        state: 'unmounted'
+  when: centos_distro.rc >= 1

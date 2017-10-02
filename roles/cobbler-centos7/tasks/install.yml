@@ -1,0 +1,26 @@
+---
+- name: 'Install the EPEL repository which contains Cobbler'
+  yum:
+    name: 'epel-release'
+    state: 'present'
+
+- name: 'Install software required for Cobbler'
+  yum:
+    name: '{{ item }}'
+    state: 'present'
+  with_items:
+    - 'cobbler'
+    - 'cobbler-web'
+    - 'koan'
+    - 'libsemanage-python'
+    - 'pykickstart'
+
+- name: 'Install Kickstart files'
+  copy:
+    src: '{{ item }}'
+    dest: '/var/lib/cobbler/kickstarts/'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+  with_items:
+    - 'virtual-dhcp-ks.cfg'

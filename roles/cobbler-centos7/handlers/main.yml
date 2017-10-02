@@ -1,0 +1,8 @@
+---
+- name: 'Restart cobblerd'
+  service:
+    name: 'cobblerd'
+    state: 'restarted'
+
+- name: 'Sync Cobbler'
+  command: '/bin/cobbler sync'

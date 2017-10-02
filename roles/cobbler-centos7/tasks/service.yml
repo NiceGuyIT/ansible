@@ -1,0 +1,12 @@
+---
+- name: 'Enable and start the httpd service'
+  service:
+    name: 'httpd'
+    state: 'started'
+    enabled: 'yes'
+
+- name: 'Enable, and start the Cobbler service'
+  service:
+    name: 'cobblerd'
+    state: 'started'
+    enabled: 'yes'

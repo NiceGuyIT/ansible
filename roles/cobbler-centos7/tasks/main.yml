@@ -1,0 +1,8 @@
+---
+- include: 'install.yml'
+- include: 'config.yml'
+- include: 'firewall.yml'
+- include: 'selinux.yml'
+- include: 'service.yml'
+- include: 'install-bootloaders.yml'
+- include: 'install-distro.yml'
