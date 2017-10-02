@@ -12,6 +12,14 @@ option domain-name    "{{ domain }}.";
 default-lease-time    86400;  # 24 Hours
 max-lease-time        172800; # 48 Hours
 
+# PXE config
+allow booting;
+allow bootp;
+set vendorclass = option vendor-class-identifier;
+option pxe-system-type code 93 = unsigned integer 16;
+# PXE config
+
+
 zone {{ domain }}. {
     primary {{ static_declarations.dns.ip }};
     key rndc-key;
@@ -31,6 +39,12 @@ subnet {{ subnet }} netmask {{ netmask }} {
     option broadcast-address     {{ broadcast }};
     option domain-name-servers    {{ static_declarations.dns.ip }};
     option domain-name        "{{ domain }}.";
+
+    # PXE config 
+    next-server	{{ static_declarations.pxe.hostname }};
+    filename "pxelinux.0";
+    # PXE config
+
     range {{ start_range }}    {{ end_range }};
         #zones
         zone {{ domain }}. {
