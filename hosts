@@ -7,7 +7,7 @@
 #   - Groups of hosts are delimited by [header] elements
 #   - You can enter hostnames or ip addresses
 #   - A hostname/ip can be a member of multiple groups
-
+192.168.0.11 #rhel-74
 
 # Layer 1 -----------------------------
 [servers:children]
@@ -32,11 +32,9 @@ backup-amanda-01
 rhce-smtp
 rhce-http
 web-nginx-01
-proxy-ha-01
 proxy-nginx-01
 rhce-kerberos
 metasploit-01
-pxe-cobbler-01
 ubuntu-17
 opensuse-leap
 av-clam-01
@@ -69,6 +67,7 @@ hacking
 antivirus
 audio
 provisioning
+samba-dc
 
 [ubuntu17]
 ubuntu-17
@@ -82,6 +81,10 @@ vh-esxi-01
 [dc]
 dc-ipa-01
 dc-ipa-02
+
+[samba-dc]
+dc-samba-01
+dc-samba-02
 
 [dhcp]
 dhcp-isc-01
@@ -228,8 +231,3 @@ proxy-ha-01
 
 [nginx_proxy]
 proxy-nginx-01
-
-
-
-
-

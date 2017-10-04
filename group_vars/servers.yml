@@ -1,4 +1,27 @@
 ---
-dns1: '192.168.1.7'
+domain: 'lukepafford.com'
+reverse_dns: '122.168.192.in-addr.arpa'
+gateway: '192.168.122.1'
+netmask: '255.255.255.0'
+subnet: '192.168.122.0'
+broadcast: '192.168.122.255'
 dns2: '192.168.1.8'
 dns3: '8.8.8.8'
+prefix: '24'
+interface_name: 'Ansible-eth1'
+static_declarations:
+  dhcp:
+    hostname: 'dhcp-isc-01'
+    ip: '192.168.122.4'
+    reverse_ip: '4'
+    mac_addr: '52:54:00:fa:5b:60'
+  dns:
+    hostname: 'dns-bind-01'
+    ip: '192.168.122.5'
+    reverse_ip: '5'
+    mac_addr: '52:54:00:f1:63:44'
+  pxe:
+    hostname: 'pxe-cobbler-01'
+    ip: '192.168.122.10'
+    reverse_ip: '10'
+    mac_addr: '52:54:00:a3:13:32'
