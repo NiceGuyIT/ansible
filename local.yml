@@ -20,7 +20,7 @@
 
 - hosts: 'pxe-cobbler-01'
   roles:
-    - 'cobbler'
+    - 'cobbler-centos7'
 
 - hosts: 'vcs-git-01'
   roles:
