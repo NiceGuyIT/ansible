@@ -1,5 +1,27 @@
 ---
-- hosts: 'localhost'
-  roles:
-    - docker
+# Add generic roles here
+#- hosts: 'all'
+#  roles:
+#    - security
+#    - user
+#    - etc...
 
+- hosts: 'kvm'
+  roles:
+    - 'kvm-hypervisor'
+
+- hosts: 'dns-bind-01'
+  roles:
+    - 'bind-master'
+
+- hosts: 'dhcp-isc-01'
+  roles:
+    - 'dhcp'
+
+- hosts: 'pxe-cobbler-01'
+  roles:
+    - 'cobbler'
+
+- hosts: 'vcs-git-01'
+  roles:
+    - 'ansible-server'
