@@ -1,0 +1,4 @@
+---
+- hosts: 'vcs-git-01'
+  roles:
+    - 'ansible-server'

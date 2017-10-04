@@ -1,0 +1,47 @@
+---
+- name: 'Create a git group for authorized push'
+  group:
+    name: 'git'
+    state: 'present'
+
+- name: 'Ensure the admin user exists on the machine'
+  user:
+    createhome: 'yes'
+    groups: 'git'
+    append: 'yes'
+    name: '{{ admin_user }}'
+    state: 'present'
+
+- name: 'Add the admin users public key to the authorized keys file'
+  authorized_key:
+    user: '{{ admin_user }}'
+    state: 'present'
+    key: "{{ lookup('file', '/home/{{ admin_user }}/.ssh/id_rsa.pub') }}"
+
+- name: 'Create a directory for Ansible configurations'
+  file:
+    path: '{{ ansible_dir }}'
+    owner: 'root'
+    group: 'git'
+    mode: '2775'
+    state: 'directory'
+
+- name: 'Ensure Ansible repo has proper file permissions'
+  command: "find {{ ansible_dir }} ( -type f -exec chmod 664 '{}' ';' ) -o ( -type d -exec chmod 775 '{}' ';' )"
+
+# 128 is the error code returned when viewing the status of a directory
+# that is not a git repository. We expect this return code on first time runs
+- name: 'Check if a bare repository has been configured'
+  command: 'git rev-parse --is-bare-repository'
+  args:
+    chdir: '{{ ansible_dir }}'
+  register: bare_repo_configured
+  changed_when: bare_repo_configured.rc == 128
+  ignore_errors: 'True'
+
+- name: 'Configure a bare repo to store Ansible configurations'
+  command: 'git init --bare'
+  args:
+    chdir: '{{ ansible_dir }}'
+  when: bare_repo_configured.rc != 0
+
