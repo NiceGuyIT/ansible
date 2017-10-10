@@ -28,3 +28,4 @@ pxe-cobbler-01
 
 [ansible_tower]
 vcs-git-01
+youtube-test
