@@ -1,0 +1,3 @@
+---
+- name: 'Update-CA-Trust'
+  command: 'update-ca-trust extract'

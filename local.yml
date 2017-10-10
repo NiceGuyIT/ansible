@@ -1,10 +1,8 @@
 ---
 # Add generic roles here
-#- hosts: 'all'
-#  roles:
-#    - security
-#    - user
-#    - etc...
+- hosts: 'all'
+  roles:
+    - 'intranet-root-certificates'
 
 - hosts: 'kvm'
   roles:

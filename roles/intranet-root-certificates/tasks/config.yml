@@ -1,0 +1,9 @@
+---
+- name: 'Install the intranet CA certificates'
+  copy:
+    src: 'lukepafford-bundle.pem'
+    dest: '/etc/pki/ca-trust/source/anchors'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+  notify: 'Update-CA-Trust'

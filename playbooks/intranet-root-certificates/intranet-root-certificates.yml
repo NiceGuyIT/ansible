@@ -1,0 +1,4 @@
+---
+- hosts: 'all'
+  roles:
+    - 'intranet-root-certificates'
