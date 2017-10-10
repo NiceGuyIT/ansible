@@ -6,6 +6,7 @@ web_nginx
 ca
 pxe
 ansible_tower
+general
 
 [dhcp]
 dhcp-isc-01
@@ -28,4 +29,6 @@ pxe-cobbler-01
 
 [ansible_tower]
 vcs-git-01
+
+[general]
 youtube-test
