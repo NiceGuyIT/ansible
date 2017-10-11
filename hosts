@@ -21,8 +21,8 @@ proxy-nginx-01
 web-nginx-01
 
 [ca]
-ca-root-01
-ca-int01
+ca-int-01
+# ca-root-01 - Turned off unless needed
 
 [pxe]
 pxe-cobbler-01
@@ -31,4 +31,3 @@ pxe-cobbler-01
 vcs-git-01
 
 [general]
-youtube-test
