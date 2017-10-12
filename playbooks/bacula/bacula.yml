@@ -1,0 +1,4 @@
+---
+- hosts: 'backup-bacula-01'
+  roles:
+    - 'bacula'

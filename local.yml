@@ -23,3 +23,7 @@
 - hosts: 'vcs-git-01'
   roles:
     - 'ansible-server'
+
+- hosts: 'backup-bacula-01'
+  roles:
+    - 'bacula'
