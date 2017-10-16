@@ -1,3 +1,6 @@
+[servers:children]
+centos7
+
 [centos7:children]
 dhcp
 dns
@@ -6,6 +9,7 @@ web_nginx
 ca
 pxe
 ansible_tower
+backup
 general
 
 [dhcp]
@@ -29,5 +33,8 @@ pxe-cobbler-01
 
 [ansible_tower]
 vcs-git-01
+
+[backup]
+backup-bacula-01
 
 [general]
