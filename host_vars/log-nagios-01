@@ -1,8 +1,0 @@
----
-ifname: '*'
-ipv4_address: '192.168.1.70/24'
-gateway: '192.168.1.254'
-nagios_version: '4.3.2'
-nagios_plugin_version: '2.2.1'
-nagios_user: 'lukepafford'
-
