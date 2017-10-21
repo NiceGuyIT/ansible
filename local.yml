@@ -1,6 +1,7 @@
 ---
 # Add generic roles here
-- hosts: 'all'
+- hosts: 'localhost'
+  user: 'root'
   roles:
     - 'intranet-root-certificates'
 
