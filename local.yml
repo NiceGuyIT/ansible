@@ -5,6 +5,15 @@
   roles:
     - 'intranet-root-certificates'
 
+- hosts: 'localhost'
+  tasks:
+  - name: 'Install packages on all servers'
+    yum:
+      name: '{{ item }}'
+      state: 'present'
+    with_items:
+      - vim
+
 - hosts: 'kvm'
   roles:
     - 'kvm-hypervisor'
