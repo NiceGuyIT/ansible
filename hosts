@@ -12,6 +12,7 @@ ca
 pxe
 ansible_tower
 backup
+db
 logging
 general
 
@@ -42,5 +43,8 @@ backup-bacula-01
 
 [logging]
 log-elk-01
+
+[db]
+db-maria-01
 
 [general]
