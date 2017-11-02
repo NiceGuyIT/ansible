@@ -12,6 +12,7 @@ ca
 pxe
 ansible_tower
 backup
+log
 general
 
 [dhcp]
@@ -38,5 +39,8 @@ vcs-git-01
 
 [backup]
 backup-bacula-01
+
+[log]
+log-elk-01
 
 [general]
