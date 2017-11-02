@@ -40,4 +40,4 @@
 
 - hosts: 'log-elk-01'
   roles:
-    - 'log-elk-01'
+    - 'elkstack'
