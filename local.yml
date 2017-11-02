@@ -37,3 +37,7 @@
 - hosts: 'backup-bacula-01'
   roles:
     - 'bacula'
+
+- hosts: 'log-elk-01'
+  roles:
+    - 'log-elk-01'

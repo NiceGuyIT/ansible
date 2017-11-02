@@ -1,0 +1,12 @@
+---
+- name: 'Restart elasticsearch'
+  service:
+    name: 'elasticsearch'
+    state: 'restarted'
+    enabled: 'yes'
+
+- name: 'Restart kibana'
+  service:
+    name: 'kibana'
+    state: 'restarted'
+    enabled: 'yes'

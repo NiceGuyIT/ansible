@@ -1,0 +1,26 @@
+---
+- name: 'Install RPM keys for ELK repos'
+  rpm_key:
+    state: 'preset'
+    key: '{{ item }}'
+  with_items:
+    - 'https://packages.elastic.co/GPG-KEY-elasticsearch'
+
+- name: 'Install ELK repos'
+  yum_repository:
+    name: 'Elasticsearch repository for 5.x packages
+    baseurl: 'https://artifacts.elastic.co/packages/5.x/yum'
+    gpgcheck: '1'
+    gpgkey: 'https://artifacts.elastic.co/GPG-KEY-elasticsearch'
+    enabled: 'yes'
+    state: 'present'
+
+- name: 'Install required packages for Elk Stack'
+  yum:
+    name: '{{ item }}'
+    state: 'present'
+  with_items:
+    - 'java-1.8.0-openjdk'
+    - 'elasticsearch'
+    - 'kibana'
+    - 'logstash'
