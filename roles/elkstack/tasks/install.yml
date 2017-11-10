@@ -1,14 +1,15 @@
 ---
 - name: 'Install RPM keys for ELK repos'
   rpm_key:
-    state: 'preset'
+    state: 'present'
     key: '{{ item }}'
   with_items:
     - 'https://packages.elastic.co/GPG-KEY-elasticsearch'
 
 - name: 'Install ELK repos'
   yum_repository:
-    name: 'Elasticsearch repository for 5.x packages'
+    name: 'Elasticsearch'
+    description: 'Elasticsearch repository for 5.x packages'
     baseurl: 'https://artifacts.elastic.co/packages/5.x/yum'
     gpgcheck: '1'
     gpgkey: 'https://artifacts.elastic.co/GPG-KEY-elasticsearch'

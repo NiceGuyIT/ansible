@@ -4,6 +4,7 @@ localhost ansible_connection=local
 centos7
 
 [centos7:children]
+dc
 dhcp
 dns
 nginx_proxy
@@ -15,6 +16,9 @@ backup
 db
 logging
 general
+
+[dc]
+dc-samba-01
 
 [dhcp]
 dhcp-isc-01
