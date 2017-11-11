@@ -1,2 +1,3 @@
 ---
 - include: 'config.yml'
+  when: "'repo-yum-01' not in inventory_hostname"
