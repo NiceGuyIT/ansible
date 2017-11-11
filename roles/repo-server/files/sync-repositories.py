@@ -9,7 +9,7 @@ def main():
 		'epel': '{0}/epel/7/x86_64/'.format(base_dir),
 		'CentOS-Base': '{0}/centos/7/base/x86_64/'.format(base_dir),
 		'CentOS-Updates': '{0}/centos/7/updates/x86_64'.format(base_dir),
-		'CentOs-Extras': '{0}/centos/7/extras/x86_64'.format(base_dir),
+		'CentOS-Extras': '{0}/centos/7/extras/x86_64'.format(base_dir),
 		'CentOS-Plus': '{0}/centos/7/plus/x86_64'.format(base_dir)
 	}
 
