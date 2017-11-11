@@ -18,6 +18,7 @@
       state: 'present'
     with_items:
       - vim
+      - yum-utils
 
 - hosts: 'kvm'
   roles:
