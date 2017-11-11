@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import subprocess as sp
+import os
 
 def main():
 	base_dir = '/var/www/html/repos'
@@ -27,7 +28,10 @@ def sync_repositories(repoid, repo_path):
 
 
 def update_repo(repo_path):
-	sp.check_call(['/usr/bin/createrepo', '-g', '{0}/comps.xml'.format(repo_path), '--update', repo_path])
+	if os.path.isfile('{0}/comps.xml'.format(repo_path)):
+		sp.check_call(['/usr/bin/createrepo', '-g', '{0}/comps.xml'.format(repo_path), '--update', repo_path])
+	else:
+		sp.check_call(['/usr/bin/createrepo', '--update', repo_path])
 
 if __name__ == '__main__':
 	main()
