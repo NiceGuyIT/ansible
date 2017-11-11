@@ -1,4 +1,9 @@
 ---
+- name: 'Install the EPEL rpm key'
+  rpm_key:
+    key: 'https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-7'
+    state: 'present'
+
 - name: 'Configure server yum client configs'
   yum_repository:
     name: '{{ item.name }}'
