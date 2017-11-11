@@ -1,7 +1,7 @@
 ---
 managed_files:
-  - 'CentOS-Base.repo'
-  - 'CentOS-Updates.repo'
-  - 'CentOS-Extras.repo'
-  - 'CentOS-Plus.repo'
-  - 'epel.repo'
+  - 'lukepafford-base.repo'
+  - 'lukepafford-updates.repo'
+  - 'lukepafford-extras.repo'
+  - 'lukepafford-plus.repo'
+  - 'lukepafford-epel.repo'
