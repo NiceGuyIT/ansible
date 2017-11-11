@@ -4,6 +4,7 @@
   user: 'root'
   roles:
     - 'intranet-root-certificates'
+    - 'yum-client'
 
 - hosts: 'localhost'
   tasks:
@@ -41,3 +42,7 @@
 - hosts: 'log-elk-01'
   roles:
     - 'elkstack'
+
+- hosts: 'updates'
+  roles:
+    - 'repo-server'
