@@ -18,7 +18,7 @@ def main():
 		except sp.CalledProcessError:
 			print 'Failed to sync repo {0}'.format(repoid)
 		try:
-			update_repo(repoid, repo_path)
+			update_repo(repo_path)
 		except sp.CalledProcessError:
 			print 'Failed to update repository metadata at {0}'.format(repo_path)
 
@@ -26,7 +26,7 @@ def sync_repositories(repoid, repo_path):
 	sp.check_call(['/usr/bin/reposync', '--repoid={0}'.format(repoid), '--download_path={0}'.format(repo_path), '--downloadcomps', '--norepopath'])
 
 
-def update_rpeo(repo_path):
+def update_repo(repo_path):
 	sp.check_call(['/usr/bin/createrepo', '-g', '{0}/comps.xml'.format(repo_path), '--update', repo_path])
 
 if __name__ == '__main__':
