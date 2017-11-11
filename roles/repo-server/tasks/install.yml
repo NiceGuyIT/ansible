@@ -1,0 +1,11 @@
+---
+- name: 'Install required packages to mirror yum repos'
+  yum:
+    name: '{{ item }}'
+    state: 'present'
+  with_items:
+    - 'epel-release'
+    - 'createrepo'
+    - 'yum-utils'
+    - 'httpd'
+    - 'mod_ssl'

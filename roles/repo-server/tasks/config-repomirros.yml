@@ -1,0 +1,14 @@
+---
+- name: 'Configure server yum client configs'
+  yum_repository:
+    name: '{{ item.name }}'
+    description: '{{ item.description }}'
+    mirrorlist: '{{ item.mirrorlist }}'
+    gpgcheck: 'yes'
+    gpgkey: '{{ item.gpgfile }}'
+  with_items:
+    - { 'name': 'CentOS-Base', 'description': 'CentOS-$releasever - Base', 'mirrorlist': 'http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=os&infra=$infra', 'gpgfile': 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7' }
+    - { 'name': 'CentOS-Extras', 'description': 'CentOS-$releasever - Extras', 'mirrorlist': 'http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=extras&infra=$infra', 'gpgfile': 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7' }
+    - { 'name': 'CentOS-Plus', 'description': 'CentOS-$releasever - Plus', 'mirrorlist': 'http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=centosplus&infra=$infra', 'gpgfile': 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7' }
+    - { 'name': 'CentOS-Updates', 'description': 'CentOS-$releasever - Updates', 'mirrorlist': 'http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=updates&infra=$infra', 'gpgfile': 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7' }
+    - { 'name': 'epel', 'description': 'Extra Packages for Enterprise Linux 7 - $basearch', 'mirrorlist': 'https://mirrors.fedoraproject.org/metalink?repo=epel-7&arch=$basearch', 'gpgfile': 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7' }

@@ -1,0 +1,34 @@
+---
+- name: 'Create Yum directories'
+  file:
+    path: '/var/www/html/repos/{{ item }}'
+    state: 'directory'
+    owner: 'root'
+    group: 'apache'
+    mode: '0755'
+  with_items:
+    - 'epel/7/x86_64'
+    - 'centos/7/base/x86_64'
+    - 'centos/7/updates/x86_64'
+    - 'centos/7/extras/x86_64'
+    - 'centos/7/plus/x86_64'
+
+- name: 'Install the scripts required to sync repositories'
+  copy:
+    src: '{{ item }}'
+    dest: '/usr/local/bin/'
+    owner: 'root'
+    group: 'root'
+    mode: '0755'
+  with_items:
+    - 'sync-repositories.py'
+
+- name: 'Configure a cron job to periodically sync content'
+  cron:
+    name: 'Sync yum content'
+    cron_file: '/etc/cron.d/sync-repositories'
+    minute: '0'
+    hour: '*/6'
+    state: 'present'
+    user: 'root'
+    job: '/usr/bin/flock -n /var/lock/sync-repositories -c /usr/local/bin/sync-repositories.py'

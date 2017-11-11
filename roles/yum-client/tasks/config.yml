@@ -1,0 +1,27 @@
+---
+- name: 'Configure server yum client configs'
+  yum_repository:
+    name: '{{ item.name }}'
+    description: '{{ item.description }}'
+    baseurl: '{{ item.baseurl }}'
+    gpgcheck: 'yes'
+    gpgkey: '{{ item.gpgfile }}'
+    enabled: 'yes'
+  with_items:
+    - { 'name': 'CentOS-Base', 'description': 'CentOS-$releasever - Base', 'baseurl': 'https://repo-yum-01.lukepafford.com/centos/$releasever/base/$basearch', 'gpgfile': 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7' }
+    - { 'name': 'CentOS-Extras', 'description': 'CentOS-$releasever - Extras', 'baseurl': 'https://repo-yum-01.lukepafford.com/centos/$releasever/extras/$basearch', 'gpgfile': 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7' }
+    - { 'name': 'CentOS-Plus', 'description': 'CentOS-$releasever - Plus', 'baseurl': 'https://repo-yum-01.lukepafford.com/centos/$releasever/plus/$basearch', 'gpgfile': 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7' }
+    - { 'name': 'CentOS-Updates', 'description': 'CentOS-$releasever - Updates', 'baseurl': 'https://repo-yum-01.lukepafford.com/centos/$releasever/updates/$basearch', 'gpgfile': 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7' }
+    - { 'name': 'epel', 'description': 'Extra Packages for Enterprise Linux 7 - $basearch', 'baseurl': 'https://repo-yum-01.lukepafford.com/epel/$releasever/$basearch', 'gpgfile': 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7' }
+
+- name: 'Get list of repo files'
+  command: 'ls -1 /etc/yum.repos.d'
+  register: contents
+  changed_when: False
+
+- name: 'Remove unmanaged repos'
+  file:
+    path: '/etc/yum.repos.d/{{ item }}'
+    state: 'absent'
+  with_items: '{{ contents.stdout_lines }}'
+  when: item not in managed_files

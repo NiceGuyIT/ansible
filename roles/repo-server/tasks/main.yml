@@ -1,0 +1,5 @@
+---
+- include: 'install.yml'
+- include: 'config.yml'
+- include: 'config-repomirros.yml'
+- include: 'config-apache.yml'
