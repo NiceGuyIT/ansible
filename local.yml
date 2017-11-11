@@ -4,6 +4,10 @@
   user: 'root'
   roles:
     - 'intranet-root-certificates'
+
+- hosts: 'localhost:!updates'
+  user: 'root'
+  roles:
     - 'yum-client'
 
 - hosts: 'localhost'
