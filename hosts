@@ -17,6 +17,9 @@ logging
 updates
 general
 
+[kvm]
+vh-kvm-01
+
 [dc]
 dc-samba-01
 
