@@ -5,6 +5,7 @@ centos7
 
 [centos7:children]
 dc
+kdc
 dhcp
 dns
 nginx_proxy
@@ -22,6 +23,9 @@ vh-kvm-01
 
 [dc]
 dc-samba-01
+
+[kdc]
+kdc-mit-01
 
 [dhcp]
 dhcp-isc-01
