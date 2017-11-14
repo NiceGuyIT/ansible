@@ -10,6 +10,7 @@ dhcp
 dns
 nginx_proxy
 web_nginx
+web_apache
 ca
 pxe
 ansible_tower
@@ -38,6 +39,9 @@ proxy-nginx-01
 
 [web_nginx]
 web-nginx-01
+
+[web_apache]
+web-apache-01
 
 [ca]
 ca-int-01
