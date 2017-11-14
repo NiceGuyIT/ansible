@@ -51,3 +51,7 @@
 - hosts: 'updates'
   roles:
     - 'repo-server'
+
+- hosts: 'web-apache-01'
+  roles:
+    - 'apache-kerberos'

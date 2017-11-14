@@ -1,0 +1,4 @@
+---
+- hosts: 'web-apache-01'
+  roles:
+    - 'apache-kerberos'
