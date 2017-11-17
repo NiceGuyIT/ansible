@@ -73,5 +73,6 @@ vpn-openvpn-01
 
 [load_balancer]
 lb-haproxy-01
+lb-haproxy-02
 
 [general]
