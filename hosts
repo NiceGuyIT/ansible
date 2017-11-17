@@ -19,6 +19,7 @@ logging
 updates
 general
 cloud
+vpn
 
 [kvm]
 vh-kvm-01
@@ -65,5 +66,8 @@ repo-yum-01
 
 [cloud]
 ec2-01
+
+[vpn]
+vpn-openvpn-01
 
 [general]
