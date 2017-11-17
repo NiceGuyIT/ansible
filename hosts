@@ -20,6 +20,7 @@ updates
 general
 cloud
 vpn
+load_balancer
 
 [kvm]
 vh-kvm-01
@@ -69,5 +70,8 @@ ec2-01
 
 [vpn]
 vpn-openvpn-01
+
+[load_balancer]
+lb-haproxy-01
 
 [general]
