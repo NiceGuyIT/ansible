@@ -21,6 +21,7 @@ general
 cloud
 vpn
 load_balancer
+nfs
 
 [kvm]
 vh-kvm-01
@@ -74,5 +75,8 @@ vpn-openvpn-01
 [load_balancer]
 lb-haproxy-01
 lb-haproxy-02
+
+[nfs]
+file-nfs-01
 
 [general]
