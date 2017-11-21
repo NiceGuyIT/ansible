@@ -1,8 +1,4 @@
 ---
-- name: 'Install the EPEL rpm key'
-  rpm_key:
-    key: 'https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-7'
-    state: 'present'
 
 - name: 'Configure server yum client configs'
   yum_repository:
@@ -18,6 +14,11 @@
     - { 'name': 'lukepafford-plus', 'description': 'CentOS-$releasever - Plus', 'baseurl': 'https://repo-yum-01.lukepafford.com/centos/$releasever/plus/$basearch', 'gpgfile': 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7', 'enabled': 'no' }
     - { 'name': 'lukepafford-updates', 'description': 'CentOS-$releasever - Updates', 'baseurl': 'https://repo-yum-01.lukepafford.com/centos/$releasever/updates/$basearch', 'gpgfile': 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7', 'enabled': 'no' }
     - { 'name': 'lukepafford-epel', 'description': 'Extra Packages for Enterprise Linux 7 - $basearch', 'baseurl': 'https://repo-yum-01.lukepafford.com/epel/$releasever/$basearch', 'gpgfile': 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7', 'enabled': 'yes' }
+
+- name: 'Install the EPEL rpm key'
+  rpm_key:
+    key: 'https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-7'
+    state: 'present'
 
 - name: 'Get list of repo files'
   command: 'ls -1 /etc/yum.repos.d'
