@@ -5,3 +5,5 @@ managed_files:
   - 'lukepafford-extras.repo'
   - 'lukepafford-plus.repo'
   - 'lukepafford-epel.repo'
+  - 'Elasticsearch'
+  - 'Elasticsearch6'
