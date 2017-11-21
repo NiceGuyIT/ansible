@@ -27,7 +27,7 @@ nfs
 vh-kvm-01
 
 [dc]
-dc-samba-01
+dc-01
 
 [kdc]
 kdc-mit-01
