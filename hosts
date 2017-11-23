@@ -22,6 +22,7 @@ cloud
 vpn
 load_balancer
 nfs
+monitoring
 
 [kvm]
 vh-kvm-01
@@ -79,5 +80,8 @@ lb-haproxy-02
 
 [nfs]
 file-nfs-01
+
+[monitoring]
+nagios-01
 
 [general]

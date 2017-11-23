@@ -15,6 +15,7 @@
 - name: 'Check if EPEl gpg key is installed'
   shell: "rpm -q gpg-pubkey --qf '%{NAME}-%{VERSION}-%{RELEASE}\t%{SUMMARY}\n' | grep EPEL"
   changed_when: False
+  failed_when: False
   register: 'EPEL_Installed'
 
 - name: 'Install the EPEL rpm gpg key'
