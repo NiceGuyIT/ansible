@@ -23,9 +23,11 @@ vpn
 load_balancer
 nfs
 monitoring
+gluster
 
 [kvm]
 vh-kvm-01
+vh-kvm-02
 
 [dc]
 dc-01
@@ -80,6 +82,10 @@ lb-haproxy-02
 
 [nfs]
 file-nfs-01
+
+[gluster]
+file-gluster-01
+file-gluster-02
 
 [monitoring]
 nagios-01
